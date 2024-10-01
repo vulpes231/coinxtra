@@ -10,4 +10,13 @@ const getAccessToken = () => {
   }
 };
 
-export { getAccessToken };
+const sendError = (error) => {
+  if (error.response) {
+    const errMsg = error.response.message.data;
+    throw new Error(errMsg);
+  } else {
+    throw error;
+  }
+};
+
+export { getAccessToken, sendError };

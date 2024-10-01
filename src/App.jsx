@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import { Landing } from "./pages";
-import { Authnav, Navbar } from "./components";
+import { Authnav, Footer, Navbar } from "./components";
 import { getAccessToken } from "./utils/utils";
 
 const App = () => {
@@ -23,6 +23,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Landing />} />
       </Routes>
+      <Footer />
     </div>
   );
 };
