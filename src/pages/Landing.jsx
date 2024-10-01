@@ -27,8 +27,8 @@ const Landing = () => {
   return (
     <section className="myImage w-full min-h-screen relative bg-slate-950">
       <div className="w-full h-full bg-black absolute bg-opacity-80 z-10"></div>
-      <div className="text-white over p-6 relative z-20 flex flex-col items-center justify-center">
-        <div className="text-center my-10 flex flex-col gap-6 font-[Poppins]">
+      <div className="text-white over p-6 relative z-20 flex flex-col items-center justify-center gap-6">
+        <div className="text-center mt-20 flex flex-col gap-6 font-[Poppins]">
           <p className="text-xs font-normal">
             The smart alternative for your everyday finances
           </p>

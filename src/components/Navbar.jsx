@@ -10,7 +10,7 @@ const styles = {
 
 const Navbar = () => {
   return (
-    <header className="p-3 w-full h-[60px] flex items-center justify-center font-[Poppins]">
+    <header className="fixed top-0 p-3 w-full h-[60px] flex items-center justify-center font-[Poppins] z-50 bg-white">
       <nav className="md:max-w-[900px] md:mx-auto flex items-center justify-between w-full">
         <span className="flex items-center">
           <img src={logo} alt="" width={30} />
