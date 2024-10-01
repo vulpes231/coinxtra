@@ -6,7 +6,7 @@
 @tailwind utilities;
 
 .myImage {
-  background-image: url("./cxbg.jpg");
+  background-image: url("../cxbg.jpg");
   background-size: 100%;
   background-position: cover;
   background-repeat: no-repeat;
