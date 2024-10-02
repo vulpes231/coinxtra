@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
-import { Landing } from "./pages";
+import { Landing, Signin, Signup } from "./pages";
 import { Authnav, Footer, Navbar } from "./components";
 import { getAccessToken } from "./utils/utils";
 
@@ -22,6 +22,8 @@ const App = () => {
       {!token ? <Navbar /> : <Authnav />}
       <Routes>
         <Route path="/" element={<Landing />} />
+        <Route path="/login" element={<Signin />} />
+        <Route path="/register" element={<Signup />} />
       </Routes>
       <Footer />
     </div>

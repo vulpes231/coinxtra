@@ -1,7 +1,8 @@
 import Authnav from "./Authnav";
 import Coincard from "./Coincard";
 import Footer from "./Footer";
+import Input from "./Input";
 import Mobilemenu from "./Mobilemenu";
 import Navbar from "./Navbar";
 
-export { Authnav, Navbar, Coincard, Footer, Mobilemenu };
+export { Authnav, Navbar, Coincard, Footer, Mobilemenu, Input };
