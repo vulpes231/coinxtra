@@ -16,30 +16,32 @@ const authLinks = [
   {
     id: "dashboard",
     name: "dashboard",
+    path: "/dashboard",
   },
   {
     id: "deposit",
     name: "deposit",
+    path: "/deposit",
   },
   {
     id: "withdraw",
     name: "withdraw",
+    path: "/withdraw",
   },
   {
-    id: "wallet address",
-    name: "wallet address",
+    id: "settings",
+    name: "settings",
+    path: "/settings",
   },
   {
-    id: "help",
-    name: "help",
+    id: "profile",
+    name: "profile",
+    path: "/profile",
   },
   {
     id: "faq",
     name: "faq",
-  },
-  {
-    id: "whitepaper",
-    name: "whitepaper",
+    path: "/faq",
   },
 ];
 

@@ -1,6 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import { Dashboard, Landing, Signin, Signup } from "./pages";
+import {
+  Dashboard,
+  Deposit,
+  Faq,
+  Landing,
+  Profile,
+  Settings,
+  Signin,
+  Signup,
+  Withdraw,
+} from "./pages";
 import { Authnav, Footer, Navbar } from "./components";
 import { getAccessToken } from "./utils/utils";
 
@@ -32,6 +42,11 @@ const App = () => {
         <Route path="/login" element={<Signin />} />
         <Route path="/register" element={<Signup />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/deposit" element={<Deposit />} />
+        <Route path="/withdraw" element={<Withdraw />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="/faq" element={<Faq />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
       <Footer />
     </div>

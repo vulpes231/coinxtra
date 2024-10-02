@@ -29,7 +29,7 @@ const Authnav = () => {
             </small>
           </span>
         </div>
-        <button onClick={handleShowMenu}>
+        <button onClick={handleShowMenu} className="text-2xl sm:hidden">
           {!showMenu ? <CgMenu /> : <CgClose />}
         </button>
         {showMenu && <Authmenu />}
