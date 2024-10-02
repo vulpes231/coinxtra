@@ -1,5 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getAccessToken, liveServer, sendError } from "../utils/utils";
+import {
+  devServer,
+  getAccessToken,
+  liveServer,
+  sendError,
+} from "../utils/utils";
 import axios from "axios";
 
 const initialState = {
@@ -11,6 +16,7 @@ const initialState = {
 export const getUser = createAsyncThunk("user/getUser", async () => {
   const url = `${liveServer}/user`;
   const accessToken = getAccessToken();
+  //   console.log(accessToken);
   try {
     const response = await axios.get(url, {
       headers: {
@@ -18,7 +24,7 @@ export const getUser = createAsyncThunk("user/getUser", async () => {
         Authorization: `Bearer ${accessToken}`,
       },
     });
-    console.log(response.data);
+    // console.log(response.data);
     return response.data;
   } catch (error) {
     sendError(error);
@@ -37,7 +43,7 @@ const userSlice = createSlice({
       .addCase(getUser.fulfilled, (state, action) => {
         state.getUserLoading = false;
         state.getUserError = false;
-        state.user = action.payload;
+        state.user = action.payload.user;
       })
       .addCase(getUser.rejected, (state, action) => {
         state.getUserLoading = false;

@@ -9,16 +9,22 @@ const Dashboard = () => {
   const accessToken = getAccessToken();
 
   const { user } = useSelector((state) => state.user);
+
   useEffect(() => {
     if (accessToken) {
       dispatch(getUser());
     }
   }, [accessToken]);
+
+  useEffect(() => {
+    document.title = "CoinXtra - Dashboard";
+  });
+
   return (
-    <section className="min-h-screen bg-slate-100 w-full overflow-hidden ">
-      <div className="flex min-h-full mt-[66px]">
+    <section className="min-h-screen bg-slate-100 w-full mb-10 ">
+      <div className="flex min-h-full mt-[66px] ">
         <Sidebar />
-        <Dashcontent />
+        <Dashcontent user={user} />
       </div>
     </section>
   );
