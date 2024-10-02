@@ -2,10 +2,16 @@ import React from "react";
 import { FaInstagram, FaTelegram, FaTwitter } from "react-icons/fa6";
 import { logo } from "../assets";
 import { MdOutlinePhonelink, MdPhone } from "react-icons/md";
+import { getAccessToken } from "../utils/utils";
 
 const Footer = () => {
+  const accessToken = getAccessToken();
   return (
-    <div className="flex flex-col gap-2 items-center md:justify-center font-[Poppins] p-6">
+    <div
+      className={`flex flex-col gap-2 items-center md:justify-center font-[Poppins] p-6 ${
+        accessToken && "hidden"
+      }`}
+    >
       <div className="flex items-center gap-2">
         <img src={logo} alt="" width={20} />
         <h3 className="uppercase font-bold">coinxtra</h3>

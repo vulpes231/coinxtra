@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { devServer, sendError } from "../utils/utils";
+import { devServer, liveServer, sendError } from "../utils/utils";
 import axios from "axios";
 
 const initialState = {
@@ -11,7 +11,7 @@ const initialState = {
 export const loginUser = createAsyncThunk(
   "login/loginUser",
   async (formData) => {
-    const url = `${devServer}/signin`;
+    const url = `${liveServer}/signin`;
     try {
       const response = await axios.post(url, formData, {
         headers: {
