@@ -15,6 +15,9 @@ const Navbar = () => {
   const handleToggle = () => {
     setToggle((prev) => !prev);
   };
+  const closeMenu = () => {
+    setToggle(false);
+  };
 
   useEffect(() => {
     document.title = "CoinXtra - Signin";
@@ -50,7 +53,9 @@ const Navbar = () => {
         <span onClick={handleToggle} className="md:hidden text-xl font-medium">
           {!toggle ? <MdMenu /> : <MdClose />}
         </span>
-        {toggle && <Mobilemenu toggle={toggle} styles={styles} />}
+        {toggle && (
+          <Mobilemenu toggle={toggle} styles={styles} close={closeMenu} />
+        )}
       </nav>
     </header>
   );

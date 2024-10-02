@@ -12,11 +12,14 @@ const getAccessToken = () => {
 
 const sendError = (error) => {
   if (error.response) {
-    const errMsg = error.response.message.data;
+    const errMsg = error.response.data.message;
     throw new Error(errMsg);
   } else {
     throw error;
   }
 };
 
-export { getAccessToken, sendError };
+const devServer = `http://localhost:6500`;
+const liveServer = ``;
+
+export { getAccessToken, sendError, devServer, liveServer };

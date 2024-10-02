@@ -2,7 +2,7 @@ import React from "react";
 import { navLinks } from "../constants";
 import { Link } from "react-router-dom";
 
-const Mobilemenu = ({ toggle, styles }) => {
+const Mobilemenu = ({ toggle, styles, close }) => {
   return (
     <div
       className={
@@ -14,7 +14,11 @@ const Mobilemenu = ({ toggle, styles }) => {
       <div className="flex flex-col gap-6">
         {navLinks.map((link) => {
           return (
-            <Link className="active:text-yellow-600" key={link.id}>
+            <Link
+              onClick={close}
+              className="active:text-yellow-600"
+              key={link.id}
+            >
               {link.name}
             </Link>
           );
@@ -23,11 +27,13 @@ const Mobilemenu = ({ toggle, styles }) => {
           <Link
             to={"/register"}
             className={`${styles.button} bg-yellow-600 text-white`}
+            onClick={close}
           >
             sign up
           </Link>
           <Link
             to={"/login"}
+            onClick={close}
             className={`${styles.button} border-2 border-yellow-600 hover:border-none hover:bg-yellow-600 hover:text-white`}
           >
             sign in
