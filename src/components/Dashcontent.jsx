@@ -7,6 +7,7 @@ import { MdOutlinePayments } from "react-icons/md";
 import { FaMoneyBillTransfer } from "react-icons/fa6";
 import { FaCrown } from "react-icons/fa";
 import { GrTransaction } from "react-icons/gr";
+import Recentactivity from "./Recentactivity";
 
 const coins = [
   { name: "bitcoin", img: btc },
@@ -60,7 +61,7 @@ const Dashcontent = ({ user }) => {
   const sortedCoins = coinList.sort((a, b) => b.change - a.change);
 
   return (
-    <div className="w-full md:w-[80%] m-3">
+    <div className="w-full md:w-[80%] m-3 overflow-hidden">
       <div className="grid md:grid-cols-3 gap-6">
         <div className="md:col-span-2 flex flex-col gap-6">
           <span className="flex flex-col gap-2 bg-white p-4 w-full md:w-[50%] rounded-xl shadow-lg font-[Roboto]">
@@ -81,9 +82,12 @@ const Dashcontent = ({ user }) => {
               <h4>0.00</h4>
             </span>
           </div>
-          <span className="p-3 flex flex-col gap-4 bg-white">
-            <h3>Recent Activities</h3>
-          </span>
+          <div>
+            <h3 className="font-medium text-xl px-6 pt-2 bg-white p-4">
+              Recent Activities
+            </h3>
+            <Recentactivity />
+          </div>
         </div>
         <div className="flex flex-col gap-4">
           <div className="bg-white rounded-xl shadow-lg font-[Poppins] capitalize">

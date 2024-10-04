@@ -8,6 +8,7 @@ import Logo from "./Logo";
 import Mobilemenu from "./Mobilemenu";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
+import Withrawhistory from "./Withrawhistory";
 
 export {
   Authnav,
@@ -20,4 +21,5 @@ export {
   Sidebar,
   Dashcontent,
   Authmenu,
+  Withrawhistory,
 };
