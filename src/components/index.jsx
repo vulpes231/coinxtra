@@ -12,9 +12,11 @@ import Withrawhistory from "./Withrawhistory";
 import Changepass from "./Changepass";
 import Topup from "./Topup";
 import Deposithistory from "./Deposithistory";
+import Dashwallet from "./Dashwallet";
 
 export {
   Authnav,
+  Dashwallet,
   Deposithistory,
   Navbar,
   Coincard,

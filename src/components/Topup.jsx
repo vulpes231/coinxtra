@@ -1,9 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { btc } from "../assets";
 import { FaCrown, FaWallet } from "react-icons/fa6";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getAccessToken } from "../utils/utils";
+import { getUserWallet } from "../features/walletSlice";
+import { getBtcData } from "../features/coinSlice";
 
 const Topup = ({ user }) => {
+  const dispatch = useDispatch();
+  const { userWallet } = useSelector((state) => state.wallet);
+  const { btcData } = useSelector((state) => state.coin);
+  const accessToken = getAccessToken();
+
+  const coinAmount = userWallet?.balance / btcData?.bitcoin?.usd;
+
+  useEffect(() => {
+    if (accessToken) {
+      dispatch(getUserWallet());
+      dispatch(getBtcData());
+    }
+  }, [accessToken, dispatch]);
   return (
     <div className="flex flex-col gap-4 font-[Poppins]">
       <h3>Available balances</h3>
@@ -13,8 +30,10 @@ const Topup = ({ user }) => {
           <p>Bitcoin</p>
         </span>
         <span>
-          <p>500 USD</p>
-          <small className="text-xs font-light">0.0023456 BTC</small>
+          <p>{userWallet?.balance?.toFixed(2)} USD</p>
+          <small className="text-xs font-light">
+            {coinAmount ? coinAmount?.toFixed(6) : `0.000000`} BTC
+          </small>
         </span>
       </div>
       <div className="flex gap-2  items-center text-sm font-normal">

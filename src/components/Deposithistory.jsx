@@ -7,7 +7,7 @@ const styler = {
 const Deposithistory = () => {
   const [deposits, setDeposits] = useState([]);
   return (
-    <div className="overflow-auto bg-white h-[480px] p-4 flex flex-col gap-4 rounded-xl shadow-lg">
+    <div className="overflow-auto bg-white h-[350px] md:h-[480px] p-4 flex flex-col gap-4 rounded-xl shadow-lg">
       <h3 className="border-l-4 border-yellow-500 px-1 font-bold">
         Deposit history
       </h3>

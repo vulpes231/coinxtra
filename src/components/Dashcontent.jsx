@@ -8,6 +8,8 @@ import { FaMoneyBillTransfer } from "react-icons/fa6";
 import { FaCrown } from "react-icons/fa";
 import { GrTransaction } from "react-icons/gr";
 import Recentactivity from "./Recentactivity";
+import Dashwallet from "./Dashwallet";
+import { Link } from "react-router-dom";
 
 const coins = [
   { name: "bitcoin", img: btc },
@@ -61,9 +63,9 @@ const Dashcontent = ({ user }) => {
   const sortedCoins = coinList.sort((a, b) => b.change - a.change);
 
   return (
-    <div className="w-full md:w-[80%] m-3 overflow-hidden">
+    <div className="w-full lg:w-[80%] m-3 ">
       <div className="grid md:grid-cols-3 gap-6">
-        <div className="md:col-span-2 flex flex-col gap-6">
+        <div className="md:col-span-2 flex flex-col gap-6 overflow-auto">
           <span className="flex flex-col gap-2 bg-white p-4 w-full md:w-[50%] rounded-xl shadow-lg font-[Roboto]">
             <h3 className="font-medium capitalize text-xl">{user?.fullname}</h3>
             <p className="text-slate-400 flex items-center">
@@ -71,22 +73,14 @@ const Dashcontent = ({ user }) => {
               <FaCrown /> Level: {user?.level}
             </p>
           </span>
-          <div className="flex flex-col md:flex-row md:justify-between gap-4 font-[Poppins]">
-            <span className="bg-white w-full p-4 rounded-xl shadow-lg">
-              <small className="font-bold uppercase">total assets</small>
-              <h4>0.00</h4>
-            </span>
-
-            <span className="bg-white w-full p-4 rounded-xl shadow-lg">
-              <small className="font-bold uppercase">available balance</small>
-              <h4>0.00</h4>
-            </span>
-          </div>
-          <div>
+          <Dashwallet />
+          <div className="">
             <h3 className="font-medium text-xl px-6 pt-2 bg-white p-4">
               Recent Activities
             </h3>
-            <Recentactivity />
+            <div className="overflow-scroll">
+              <Recentactivity />
+            </div>
           </div>
         </div>
         <div className="flex flex-col gap-4">
@@ -94,20 +88,20 @@ const Dashcontent = ({ user }) => {
             <h3 className="font-medium text-xl px-6 py-2 ">Manage assets</h3>
             <hr />
             <div className="grid grid-cols-2 text-center p-4 gap-4">
-              <span className={styles.infoSpan}>
+              <Link to={"/deposit"} className={styles.infoSpan}>
                 <FaMoneyBillTransfer
                   className={`${styles.info} bg-green-500 text-green-500`}
                 />
                 <small className="uppercase text-xs font-medium">deposit</small>
-              </span>
-              <span className={styles.infoSpan}>
+              </Link>
+              <Link to={"/withdraw"} className={styles.infoSpan}>
                 <MdOutlinePayments
                   className={`${styles.info} bg-red-500 text-red-500`}
                 />
                 <small className="uppercase text-xs font-medium">
                   withdraw
                 </small>
-              </span>
+              </Link>
               <span className={styles.infoSpan}>
                 <GrTransaction
                   className={`${styles.info} bg-cyan-500 text-cyan-500`}
@@ -117,12 +111,12 @@ const Dashcontent = ({ user }) => {
                 </small>
               </span>
 
-              <span className={styles.infoSpan}>
+              <Link to={"/profile"} className={styles.infoSpan}>
                 <FaCrown
                   className={`${styles.info} bg-yellow-500 text-yellow-500`}
                 />
                 <small className="uppercase text-xs font-medium">level</small>
-              </span>
+              </Link>
             </div>
           </div>
           <div className=" flex flex-col gap-2 bg-white font-[Poppins] rounded-xl shadow-lg">

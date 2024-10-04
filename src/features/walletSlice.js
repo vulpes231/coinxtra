@@ -1,5 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { devServer, getAccessToken, sendError } from "../utils/utils";
+import {
+  devServer,
+  getAccessToken,
+  liveServer,
+  sendError,
+} from "../utils/utils";
 import axios from "axios";
 
 const initialState = {
@@ -11,7 +16,7 @@ const initialState = {
 export const getUserWallet = createAsyncThunk(
   "wallet/getUserWallet",
   async () => {
-    const url = `${devServer}/wallet`;
+    const url = `${liveServer}/wallet`;
     const accessToken = getAccessToken();
     try {
       const response = await axios.get(url, {
@@ -20,7 +25,7 @@ export const getUserWallet = createAsyncThunk(
           Authorization: `Bearer ${accessToken}`,
         },
       });
-      console.log(response.data);
+      // console.log(response.data);
       return response.data;
     } catch (error) {
       sendError(error);
@@ -40,7 +45,7 @@ const walletSlice = createSlice({
       .addCase(getUserWallet.fulfilled, (state, action) => {
         state.getWalletLoading = false;
         state.getWalletError = false;
-        state.userWallet = action.payload.userWallet;
+        state.userWallet = action.payload.wallet;
       })
       .addCase(getUserWallet.rejected, (state, action) => {
         state.getWalletLoading = false;

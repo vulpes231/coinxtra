@@ -11,7 +11,7 @@ const Sidebar = () => {
   };
 
   return (
-    <aside className="bg-white hidden md:flex w-[20%] p-6 mt-1 h-[calc(100% - 70px)]">
+    <aside className="bg-white hidden lg:flex w-[20%] p-6 mt-1 h-[calc(100% - 70px)]">
       <div className="flex flex-col gap-5 capitalize h-full">
         {authLinks.map((link) => {
           const icon =

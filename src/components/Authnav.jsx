@@ -23,19 +23,23 @@ const Authnav = () => {
 
   const accessToken = getAccessToken();
 
+  const closeMenu = () => {
+    setShowMenu(false);
+  };
+
   useEffect(() => {
     if (accessToken) {
       dispatch(getUser());
     }
   }, [accessToken]);
   return (
-    <header className="py-4 px-10 h-[70px] flex items-center justify-center fixed top-0 left-0 w-full bg-white">
+    <header className="py-4 px-10 h-[70px] flex items-center justify-center fixed top-0 left-0 w-full bg-white z-50">
       <nav className="flex items-center justify-between w-full">
         <Logo />
         <div className="flex gap-6 items-center">
           <MdMailOutline className="text-2xl" />
           <span className="font-[Poppins]">
-            <p className="capitalize font-medium md:font-bold">
+            <p className="capitalize font-medium md:font-bold hidden sm:flex">
               {" "}
               welcome {user?.username}
             </p>
@@ -45,10 +49,10 @@ const Authnav = () => {
             </small>
           </span>
         </div>
-        <button onClick={handleShowMenu} className="text-2xl sm:hidden">
+        <button onClick={handleShowMenu} className="text-2xl lg:hidden">
           {!showMenu ? <CgMenu /> : <CgClose />}
         </button>
-        {showMenu && <Authmenu />}
+        {showMenu && <Authmenu close={closeMenu} />}
       </nav>
     </header>
   );

@@ -29,11 +29,11 @@ const Recentactivity = () => {
 
   return (
     <div
-      className=" bg-white rounded-bl-xl rounded-br-xl shadow-xl p-6 overflow-hidden"
-      style={{ maxHeight: "550px" }}
+      className=" bg-white rounded-bl-xl rounded-br-xl shadow-xl p-6 w-full overflow-auto"
+      style={{ maxHeight: "400px" }}
       ref={scrollRef}
     >
-      <table className="min-w-full text-slate-600">
+      <table className="min-w-full text-slate-600 ">
         <tbody>
           {recentActivities.slice(0, displayCount).map((act, index) => {
             const len = act.username.length - 1;

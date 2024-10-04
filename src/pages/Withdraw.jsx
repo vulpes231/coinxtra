@@ -1,10 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Sidebar, Withrawhistory } from "../components";
 import { TbPigMoney } from "react-icons/tb";
 import { IoWalletOutline } from "react-icons/io5";
 import { getAccessToken } from "../utils/utils";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../features/userSlice";
+import { getUserWallet } from "../features/walletSlice";
+import { getBtcData } from "../features/coinSlice";
 
 const styler = {
   input:
@@ -21,11 +23,32 @@ const Withdraw = () => {
   const accessToken = getAccessToken();
 
   const { user } = useSelector((state) => state.user);
+  const { userWallet } = useSelector((state) => state.wallet);
+  const { btcData } = useSelector((state) => state.coin);
+
+  const [form, setForm] = useState({
+    amount: 0,
+    address: "",
+    fromWallet: "",
+  });
+
+  const fee = 0.024 * form.amount || 0;
+  const coinAmount = form.amount / btcData?.bitcoin?.usd;
+
+  const handleInput = (e) => {
+    const { name, value } = e.target;
+    setForm((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
   useEffect(() => {
     document.title = "CoinXtra - Withdraw";
     if (accessToken) {
       dispatch(getUser());
+      dispatch(getUserWallet());
+      dispatch(getBtcData());
     }
   }, [accessToken, dispatch]);
 
@@ -33,14 +56,19 @@ const Withdraw = () => {
     <section className="min-h-screen bg-slate-100 w-full">
       <div className="flex min-h-full mt-[66px]">
         <Sidebar />
-        <div className=" w-full md:w-[80%] m-3 customh gap-6 flex flex-col md:flex-row font-[Poppins]">
+        <div className=" w-full lg:w-[80%] m-3 customh gap-6 flex flex-col md:flex-row font-[Poppins]">
           <div className="w-full flex flex-col gap-4">
             <div className="flex flex-col gap-1 p-4 bg-white rounded-xl shadow-lg">
               <span className={styler.span}>
                 <TbPigMoney
                   className={`${styler.icon} bg-green-100 text-green-500`}
                 />
-                <p className={styler.para}>available balance:</p>
+                <p className={styler.para}>
+                  available balance:{" "}
+                  <span className="font-bold text-lg">
+                    {userWallet?.balance?.toFixed(2)} USD
+                  </span>
+                </p>
               </span>
               <span className={styler.span}>
                 <IoWalletOutline
@@ -62,11 +90,16 @@ const Withdraw = () => {
                 <label className={styler.label} htmlFor="">
                   from
                 </label>
-                <select name="" className={`${styler.input} bg-white`}>
+                <select
+                  name="fromWallet"
+                  onChange={handleInput}
+                  value={form.fromWallet}
+                  className={`${styler.input} bg-white`}
+                >
                   <option value="">choose account</option>
-                  <option value="">
+                  <option value={userWallet?._id}>
                     <div>
-                      <p>usd balance: 100.00 USD</p>
+                      <p>usd balance: {userWallet?.balance?.toFixed(2)} USD</p>
                     </div>
                   </option>
                 </select>
@@ -79,6 +112,9 @@ const Withdraw = () => {
                   type="text"
                   placeholder="Wallet address"
                   className={styler.input}
+                  onChange={handleInput}
+                  value={form.address}
+                  name="address"
                 />
               </div>
               <div className={styler.div}>
@@ -89,7 +125,14 @@ const Withdraw = () => {
                   type="text"
                   placeholder="Withdrawal amount"
                   className={styler.input}
+                  onChange={handleInput}
+                  value={form.amount}
+                  name="amount"
                 />
+              </div>
+              <div className="flex justify-between items-center capitalize text-xs font-medium text-slate-400">
+                <span>fees: ${fee.toFixed(2)}</span>
+                <span>Coin amount: {coinAmount?.toFixed(4) || 0} BTC</span>
               </div>
               <button className="text-white bg-yellow-500 border-none p-2 mt-5 font-bold uppercase">
                 request withdrawal

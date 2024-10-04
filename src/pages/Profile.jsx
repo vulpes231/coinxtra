@@ -29,10 +29,10 @@ const Profile = () => {
     document.title = "CoinXtra - Profile";
   }, []);
   return (
-    <section className="min-h-screen bg-slate-100 w-full overflow-hidden ">
+    <section className="min-h-screen bg-slate-100 w-full ">
       <div className="flex min-h-full mt-[66px]">
         <Sidebar />
-        <div className="w-full md:w-[80%] customh m-3 flex flex-col gap-6">
+        <div className="w-full lg:w-[80%] customh m-3 flex flex-col gap-6">
           <div className=" bg-white p-6 rounded-xl shadow-lg w-full md:w-[50%]">
             <h3 className="border-l-4 border-yellow-500 px-1 font-bold">
               User Profile

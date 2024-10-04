@@ -24,6 +24,10 @@ const Landing = () => {
     dispatch(getCoinData()); // Fetch data for all coins
   }, [dispatch]);
 
+  useEffect(() => {
+    document.title = "CoinXtra - Welcome";
+  });
+
   return (
     <section className="myImage w-full min-h-screen relative bg-slate-950">
       <div className="w-full h-full bg-black absolute bg-opacity-80 z-10"></div>
