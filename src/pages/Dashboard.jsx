@@ -22,7 +22,7 @@ const Dashboard = () => {
 
   return (
     <section className="min-h-screen bg-slate-100 w-full mb-10 ">
-      <div className="flex min-h-full mt-[66px] bg-red-200">
+      <div className="flex min-h-full mt-[66px]">
         <Sidebar />
         <Dashcontent user={user} />
       </div>

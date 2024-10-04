@@ -1,13 +1,101 @@
-import React from "react";
-import { Sidebar } from "../components";
+import React, { useEffect } from "react";
+import { Deposithistory, Sidebar } from "../components";
+import { TbPigMoney } from "react-icons/tb";
+import { IoWalletOutline } from "react-icons/io5";
+import { getAccessToken } from "../utils/utils";
+import { useDispatch, useSelector } from "react-redux";
+import { getUser } from "../features/userSlice";
+
+const styler = {
+  input:
+    "border outline-none focus:border-none focus:outline-yellow-500 p-2 placeholder:text-sm placeholder:font-thin",
+  div: "flex flex-col gap-1",
+  label: "capitalize font-medium text-sm",
+  para: " capitalize px-1",
+  span: "flex items-center gap-1",
+  icon: "w-10 h-10 p-1.5 rounded-full",
+};
 
 const Deposit = () => {
+  const dispatch = useDispatch();
+  const accessToken = getAccessToken();
+
+  const { user } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    document.title = "CoinXtra - Deposit";
+    if (accessToken) {
+      dispatch(getUser());
+    }
+  }, [accessToken, dispatch]);
   return (
-    <section className="min-h-screen bg-slate-100 w-full overflow-hidden ">
+    <section className="min-h-screen bg-slate-100 w-full">
       <div className="flex min-h-full mt-[66px]">
         <Sidebar />
-        <div className="bg-white w-full md:w-[80%] customh m-3 p-6">
-          Deposit
+        <div className=" w-full md:w-[80%] m-3 customh gap-6 flex flex-col md:flex-row font-[Poppins]">
+          <div className="w-full flex flex-col gap-4">
+            <div className="flex flex-col gap-1 p-4 bg-white rounded-xl shadow-lg">
+              <span className={styler.span}>
+                <TbPigMoney
+                  className={`${styler.icon} bg-green-100 text-green-500`}
+                />
+                <p className={styler.para}>available balance:</p>
+              </span>
+              <span className={styler.span}>
+                <IoWalletOutline
+                  className={`${styler.icon} bg-yellow-100 text-yellow-500`}
+                />
+                <p className={styler.para}>
+                  linked address: <span>{user?.bindAddress}</span>{" "}
+                </p>
+              </span>
+            </div>
+            <form
+              action=""
+              className="flex flex-col gap-4 bg-white p-6 rounded-xl shadow-lg"
+            >
+              <h3 className="border-l-4 border-yellow-500 px-1 font-bold">
+                Deposit
+              </h3>
+
+              <div className={styler.div}>
+                <label className={styler.label} htmlFor="">
+                  deposit to
+                </label>
+                <span className="flex items-center gap-2">
+                  <input
+                    type="text"
+                    placeholder="Wallet address"
+                    className={`${styler.input} w-full`}
+                    readOnly
+                  />
+                  <button className="bg-slate-400 text-white text-xs w-[15%] font-medium py-3 px-2">
+                    Copy
+                  </button>
+                </span>
+              </div>
+              <div className={styler.div}>
+                <label className={styler.label} htmlFor="">
+                  amount
+                </label>
+                <input
+                  type="text"
+                  placeholder="Amount"
+                  className={styler.input}
+                />
+              </div>
+              <div className="flex justify-between items-center capitalize text-xs font-medium text-slate-400">
+                <span>fees: $0.15</span>
+                <span>Coin amount:</span>
+              </div>
+              <button className="text-white bg-yellow-500 border-none p-2 mt-5 font-bold uppercase">
+                deposit
+              </button>
+            </form>
+          </div>
+          <div className="w-full ">
+            <Deposithistory />
+          </div>
         </div>
       </div>
     </section>

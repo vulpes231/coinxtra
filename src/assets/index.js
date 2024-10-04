@@ -7,5 +7,6 @@ import ltc from "./litecoin.png";
 import usdt from "./tether.png";
 import tron from "./tron.png";
 import xrp from "./xrp.png";
+import userProfile from "./user.png";
 
-export { logo, btc, bnb, doge, eth, ltc, usdt, tron, xrp };
+export { logo, btc, bnb, doge, eth, ltc, usdt, tron, xrp, userProfile };

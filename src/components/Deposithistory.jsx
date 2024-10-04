@@ -4,12 +4,12 @@ const styler = {
   th: "px-5 py-1.5",
 };
 
-const Withrawhistory = () => {
-  const [withdrawals, setWithdrawals] = useState([]);
+const Deposithistory = () => {
+  const [deposits, setDeposits] = useState([]);
   return (
-    <div className="overflow-auto bg-white h-[528px] p-4 flex flex-col gap-4">
+    <div className="overflow-auto bg-white h-[480px] p-4 flex flex-col gap-4 rounded-xl shadow-lg">
       <h3 className="border-l-4 border-yellow-500 px-1 font-bold">
-        Withdraw history
+        Deposit history
       </h3>
       <table className="min-w-full">
         <thead>
@@ -19,9 +19,9 @@ const Withrawhistory = () => {
             <th className={styler.th}>date</th>
           </tr>
         </thead>
-        {!withdrawals.length ? (
+        {!deposits.length ? (
           <div className="absolute p-4">
-            <p>you have no withdrawal history</p>
+            <p>you have no deposit history</p>
           </div>
         ) : (
           <tbody></tbody>
@@ -31,4 +31,4 @@ const Withrawhistory = () => {
   );
 };
 
-export default Withrawhistory;
+export default Deposithistory;

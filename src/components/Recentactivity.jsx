@@ -33,7 +33,6 @@ const Recentactivity = () => {
       style={{ maxHeight: "550px" }}
       ref={scrollRef}
     >
-      <h3>Recent Activities</h3>
       <table className="min-w-full text-slate-600">
         <tbody>
           {recentActivities.slice(0, displayCount).map((act, index) => {

@@ -2,6 +2,9 @@ import React, { useEffect } from "react";
 import { Sidebar, Withrawhistory } from "../components";
 import { TbPigMoney } from "react-icons/tb";
 import { IoWalletOutline } from "react-icons/io5";
+import { getAccessToken } from "../utils/utils";
+import { useDispatch, useSelector } from "react-redux";
+import { getUser } from "../features/userSlice";
 
 const styler = {
   input:
@@ -14,9 +17,18 @@ const styler = {
 };
 
 const Withdraw = () => {
+  const dispatch = useDispatch();
+  const accessToken = getAccessToken();
+
+  const { user } = useSelector((state) => state.user);
+
   useEffect(() => {
     document.title = "CoinXtra - Withdraw";
-  });
+    if (accessToken) {
+      dispatch(getUser());
+    }
+  }, [accessToken, dispatch]);
+
   return (
     <section className="min-h-screen bg-slate-100 w-full">
       <div className="flex min-h-full mt-[66px]">
@@ -34,7 +46,9 @@ const Withdraw = () => {
                 <IoWalletOutline
                   className={`${styler.icon} bg-yellow-100 text-yellow-500`}
                 />
-                <p className={styler.para}>linked address:</p>
+                <p className={styler.para}>
+                  linked address: <span>{user?.bindAddress}</span>{" "}
+                </p>
               </span>
             </div>
             <form
@@ -78,7 +92,7 @@ const Withdraw = () => {
                 />
               </div>
               <button className="text-white bg-yellow-500 border-none p-2 mt-5 font-bold uppercase">
-                send withdrawal
+                request withdrawal
               </button>
             </form>
           </div>

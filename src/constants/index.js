@@ -29,11 +29,6 @@ const authLinks = [
     path: "/withdraw",
   },
   {
-    id: "settings",
-    name: "settings",
-    path: "/settings",
-  },
-  {
     id: "profile",
     name: "profile",
     path: "/profile",

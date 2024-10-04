@@ -9,9 +9,13 @@ import Mobilemenu from "./Mobilemenu";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 import Withrawhistory from "./Withrawhistory";
+import Changepass from "./Changepass";
+import Topup from "./Topup";
+import Deposithistory from "./Deposithistory";
 
 export {
   Authnav,
+  Deposithistory,
   Navbar,
   Coincard,
   Footer,
@@ -22,4 +26,6 @@ export {
   Dashcontent,
   Authmenu,
   Withrawhistory,
+  Changepass,
+  Topup,
 };
