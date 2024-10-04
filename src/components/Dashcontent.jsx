@@ -133,19 +133,28 @@ const Dashcontent = ({ user }) => {
                 <p className="capitalize font-bold border-l-4 px-1 text-md border-yellow-600">
                   email
                 </p>
-                <p>{user?.email}</p>
+                <p>{`${user?.email?.slice(0, 3)}***${user?.email?.slice(
+                  user?.email?.length - 8
+                )}`}</p>
               </small>
               <small>
                 <p className="capitalize font-bold border-l-4 px-1 text-md border-yellow-600">
                   pin
                 </p>
-                <p>{user?.pin}</p>
+                <p>{`${user?.pin?.slice(0, 1)}***${user?.pin?.slice(
+                  user?.pin?.length - 1
+                )}`}</p>
               </small>
               <small>
                 <p className="capitalize font-bold border-l-4 px-1 text-md border-yellow-600">
                   wallet address
                 </p>
-                <p>{user?.bindAddress}</p>
+                <p>{`${user?.bindAddress?.slice(
+                  0,
+                  3
+                )}*******${user?.bindAddress?.slice(
+                  user?.bindAddress?.length - 6
+                )}`}</p>
               </small>
             </span>
           </div>
