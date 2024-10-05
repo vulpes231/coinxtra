@@ -4,6 +4,7 @@ import {
   Dashboard,
   Deposit,
   Faq,
+  Fee,
   Landing,
   Profile,
   Settings,
@@ -47,6 +48,7 @@ const App = () => {
         <Route path="/settings" element={<Settings />} />
         <Route path="/faq" element={<Faq />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/complete/:fee" element={<Fee />} />
       </Routes>
       <Footer />
     </div>

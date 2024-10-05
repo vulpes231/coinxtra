@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../features/userSlice";
 import { getUserWallet } from "../features/walletSlice";
 import { getBtcData } from "../features/coinSlice";
+import { resetWithdraw, withdrawFunds } from "../features/trnxSlice";
+import { useNavigate } from "react-router-dom";
 
 const styler = {
   input:
@@ -20,6 +22,7 @@ const styler = {
 
 const Withdraw = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const accessToken = getAccessToken();
 
   const { user } = useSelector((state) => state.user);
@@ -28,9 +31,16 @@ const Withdraw = () => {
 
   const [form, setForm] = useState({
     amount: 0,
-    address: "",
-    fromWallet: "",
+    walletAddress: "",
+    pin: "",
   });
+
+  const [error, setError] = useState(false);
+  const [trnxFee, setTrnxFee] = useState(false);
+
+  const { withdrawError, withdrawLoading, withdrawSuccess } = useSelector(
+    (state) => state.trnx
+  );
 
   const fee = 0.024 * form.amount || 0;
   const coinAmount = form.amount / btcData?.bitcoin?.usd;
@@ -43,6 +53,20 @@ const Withdraw = () => {
     }));
   };
 
+  const handleSubmit = (e) => {
+    console.log("withdrawing");
+    e.preventDefault();
+    const data = {
+      walletAddress: form.walletAddress,
+      pin: form.pin,
+      amount: form.amount,
+      coinType: "bitcoin",
+    };
+    console.log(data);
+    dispatch(withdrawFunds(data));
+    setTrnxFee(fee);
+  };
+
   useEffect(() => {
     document.title = "CoinXtra - Withdraw";
     if (accessToken) {
@@ -51,6 +75,36 @@ const Withdraw = () => {
       dispatch(getBtcData());
     }
   }, [accessToken, dispatch]);
+
+  useEffect(() => {
+    if (withdrawError) {
+      setError(withdrawError);
+    }
+  }, [withdrawError]);
+
+  useEffect(() => {
+    let timeout;
+    if (error) {
+      timeout = 2000;
+      setTimeout(() => {
+        dispatch(resetWithdraw());
+        setError(false);
+      }, timeout);
+    }
+    return () => clearTimeout(timeout);
+  }, [error, dispatch]);
+
+  useEffect(() => {
+    let timeout;
+    if (withdrawSuccess) {
+      timeout = 2000;
+      setTimeout(() => {
+        dispatch(resetWithdraw());
+        navigate(`/complete/${fee}`);
+      }, timeout);
+    }
+    return () => clearTimeout(timeout);
+  }, [withdrawSuccess, dispatch]);
 
   return (
     <section className="min-h-screen bg-slate-100 w-full">
@@ -130,12 +184,31 @@ const Withdraw = () => {
                   name="amount"
                 />
               </div>
+              <div className={styler.div}>
+                <label className={styler.label} htmlFor="">
+                  pin
+                </label>
+                <input
+                  type="password"
+                  placeholder="pin"
+                  className={styler.input}
+                  onChange={handleInput}
+                  value={form.pin}
+                  name="pin"
+                />
+              </div>
               <div className="flex justify-between items-center capitalize text-xs font-medium text-slate-400">
                 <span>fees: ${fee.toFixed(2)}</span>
                 <span>Coin amount: {coinAmount?.toFixed(4) || 0} BTC</span>
               </div>
-              <button className="text-white bg-yellow-500 border-none p-2 mt-5 font-bold uppercase">
-                request withdrawal
+              {withdrawSuccess && (
+                <p className="text-green-500">Withdrawal pending.</p>
+              )}
+              <button
+                onClick={handleSubmit}
+                className="text-white bg-yellow-500 border-none p-2 mt-5 font-bold uppercase"
+              >
+                {!withdrawLoading ? " request withdrawal" : "processing..."}
               </button>
             </form>
           </div>
