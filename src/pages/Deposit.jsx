@@ -69,7 +69,7 @@ const Deposit = () => {
     style: "decimal",
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
-  }).format(userWallet.balance);
+  }).format(userWallet?.balance);
   return (
     <section className="min-h-screen bg-slate-100 w-full ">
       <div className="flex min-h-full mt-[66px]">

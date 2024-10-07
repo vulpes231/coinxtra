@@ -27,13 +27,13 @@ const Dashwallet = () => {
     style: "decimal",
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
-  }).format(userWallet.balance);
+  }).format(userWallet?.balance);
 
   const formattedBtcPrice = new Intl.NumberFormat("en-US", {
     style: "decimal",
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
-  }).format(btcData.bitcoin.usd);
+  }).format(btcData?.bitcoin?.usd);
 
   return (
     <div className="flex flex-col md:flex-row md:justify-between gap-4 font-[Poppins]">
