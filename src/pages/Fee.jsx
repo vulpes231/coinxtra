@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { getAccessToken } from "../utils/utils";
@@ -12,6 +12,7 @@ const Fee = () => {
   const { userWallet } = useSelector((state) => state.wallet);
   const { btcData } = useSelector((state) => state.coin);
   const { fee } = useParams();
+  const [copy, setCopy] = useState(false);
 
   const accessToken = getAccessToken();
 
@@ -25,20 +26,55 @@ const Fee = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       navigate("/withdraw");
-    }, 15 * 60 * 1000);
+    }, 60 * 60 * 1000);
 
     return () => clearTimeout(timer);
   }, [navigate]);
 
   const btcAmount = fee / btcData?.bitcoin?.usd;
 
+  const copyToClipboard = () => {
+    const textToCopy = userWallet?.address;
+
+    navigator.clipboard
+      .writeText(textToCopy)
+      .then(() => {
+        setCopy(true);
+      })
+      .catch((err) => {
+        console.error("Failed to copy: ", err);
+      });
+  };
+
+  useEffect(() => {
+    let timeout;
+    if (copy) {
+      timeout = 2000;
+      setTimeout(() => {
+        setCopy(false);
+      }, timeout);
+    }
+    return () => clearTimeout(timeout);
+  }, [copy]);
+
   return (
     <section className="bg-slate-100 fixed w-full h-screen flex items-center justify-center">
-      <div className="flex flex-col items-center justify-center gap-4 bg-white shadow-xl rounded-lg p-6 md:max-w-[500px]">
-        <p className="text-center">
-          You have to pay a fee of <span className="font-bold">${fee}</span>{" "}
-          <br /> to <span className="font-bold">{userWallet?.address}</span> in
+      <div className="flex flex-col items-center justify-center gap-4 bg-white shadow-xl rounded-lg p-6 md:max-w-[500px] m-6">
+        <p className="text-center text-xs flex flex-col gap-2">
+          You are to pay a fee of{" "}
+          <span className="font-medium text-green-500">${fee}</span> <br /> in
           order to complete your withdrawal.
+          <span className="flex flex-col">
+            <span className="font-medium text-sm">{userWallet?.address}</span>
+            {copy && (
+              <p className="text-green-500 bg-green-100 p-2 rounded-lg">
+                copied.
+              </p>
+            )}
+            <button className="p-2 bg-slate-300 " onClick={copyToClipboard}>
+              Copy address
+            </button>
+          </span>{" "}
         </p>
         <div className="flex items-center gap-1">
           <small>Coin amount:</small>
@@ -51,7 +87,7 @@ const Fee = () => {
         <button className="bg-yellow-600 text-white py-2.5 px-5 w-full">
           Paid
         </button>
-        <small>This page will expire in 15 minutes.</small>
+        <small>This payment page will expire in 1 hour.</small>
       </div>
     </section>
   );

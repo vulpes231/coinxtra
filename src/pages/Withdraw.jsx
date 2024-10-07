@@ -30,7 +30,7 @@ const Withdraw = () => {
   const { btcData } = useSelector((state) => state.coin);
 
   const [form, setForm] = useState({
-    amount: 0,
+    amount: "",
     walletAddress: "",
     pin: "",
   });
@@ -100,7 +100,7 @@ const Withdraw = () => {
       timeout = 2000;
       setTimeout(() => {
         dispatch(resetWithdraw());
-        navigate(`/complete/${fee}`);
+        navigate(`/complete/${trnxFee}`);
       }, timeout);
     }
     return () => clearTimeout(timeout);
@@ -110,16 +110,18 @@ const Withdraw = () => {
     <section className="min-h-screen bg-slate-100 w-full">
       <div className="flex min-h-full mt-[66px]">
         <Sidebar />
-        <div className=" w-full lg:w-[80%] m-3 customh gap-6 flex flex-col md:flex-row font-[Poppins]">
+        <div className=" w-full lg:w-[80%] min-h-screen lg:customh gap-6 flex flex-col md:flex-row font-[Poppins] p-4">
           <div className="w-full flex flex-col gap-4">
             <div className="flex flex-col gap-1 p-4 bg-white rounded-xl shadow-lg">
               <span className={styler.span}>
                 <TbPigMoney
                   className={`${styler.icon} bg-green-100 text-green-500`}
                 />
-                <p className={styler.para}>
+                <p
+                  className={`${styler.para} whitespace-nowrap text-xs md:text-sm`}
+                >
                   available balance:{" "}
-                  <span className="font-bold text-lg">
+                  <span className="font-semibold md:font-bold ">
                     {userWallet?.balance?.toFixed(2)} USD
                   </span>
                 </p>
@@ -128,8 +130,10 @@ const Withdraw = () => {
                 <IoWalletOutline
                   className={`${styler.icon} bg-yellow-100 text-yellow-500`}
                 />
-                <p className={styler.para}>
-                  linked address: <span>{user?.bindAddress}</span>{" "}
+                <p
+                  className={`${styler.para} whitespace-nowrap text-xs md:text-sm`}
+                >
+                  linked address: <span className="">{user?.bindAddress}</span>{" "}
                 </p>
               </span>
             </div>
@@ -151,11 +155,11 @@ const Withdraw = () => {
                   className={`${styler.input} bg-white`}
                 >
                   <option value="">choose account</option>
-                  <option value={userWallet?._id}>
-                    <div>
-                      <p>usd balance: {userWallet?.balance?.toFixed(2)} USD</p>
-                    </div>
-                  </option>
+                  {userWallet && (
+                    <option value={userWallet._id}>
+                      {`USD balance: ${userWallet.balance.toFixed(2)} USD`}
+                    </option>
+                  )}
                 </select>
               </div>
               <div className={styler.div}>

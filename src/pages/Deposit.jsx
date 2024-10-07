@@ -42,6 +42,20 @@ const Deposit = () => {
 
   const coinAmount = form.amount / btcData?.bitcoin?.usd;
 
+  const copyToClipboard = (e) => {
+    e.preventDefault();
+    const textToCopy = userWallet?.address;
+
+    navigator.clipboard
+      .writeText(textToCopy)
+      .then(() => {
+        setCopy(true);
+      })
+      .catch((err) => {
+        console.error("Failed to copy: ", err);
+      });
+  };
+
   useEffect(() => {
     document.title = "CoinXtra - Deposit";
     if (accessToken) {
@@ -51,19 +65,21 @@ const Deposit = () => {
     }
   }, [accessToken, dispatch]);
   return (
-    <section className="min-h-screen bg-slate-100 w-full p-6 md:p-3">
+    <section className="min-h-screen bg-slate-100 w-full ">
       <div className="flex min-h-full mt-[66px]">
         <Sidebar />
-        <div className=" w-full lg:w-[80%] customh gap-6 flex flex-col md:flex-row font-[Poppins] text-xs md:text-lg">
+        <div className=" w-full lg:w-[80%] min-h-screen lg:customh gap-6 flex flex-col md:flex-row font-[Poppins] text-xs md:text-lg p-4">
           <div className="w-full flex flex-col gap-4">
             <div className="flex flex-col gap-1 p-4 bg-white rounded-xl shadow-lg">
               <span className={styler.span}>
                 <TbPigMoney
                   className={`${styler.icon} bg-green-100 text-green-500`}
                 />
-                <p className={styler.para}>
+                <p
+                  className={`${styler.para} whitespace-nowrap text-xs md:text-sm`}
+                >
                   available balance:{" "}
-                  <span className="font-bold text-lg">
+                  <span className="font-semibold md:font-bold ">
                     {userWallet?.balance?.toFixed(2)} USD
                   </span>
                 </p>
@@ -72,14 +88,16 @@ const Deposit = () => {
                 <IoWalletOutline
                   className={`${styler.icon} bg-yellow-100 text-yellow-500`}
                 />
-                <p className={styler.para}>
-                  linked address: <span>{user?.bindAddress}</span>{" "}
+                <p
+                  className={`${styler.para} whitespace-nowrap text-xs md:text-sm`}
+                >
+                  linked address: <span className="">{user?.bindAddress}</span>{" "}
                 </p>
               </span>
             </div>
             <form
               action=""
-              className="flex flex-col gap-4 bg-white p-6 rounded-xl shadow-lg"
+              className="flex flex-col gap-4 bg-white  rounded-xl shadow-lg p-4"
             >
               <h3 className="border-l-4 border-yellow-500 px-1 font-bold">
                 Deposit
@@ -87,13 +105,15 @@ const Deposit = () => {
 
               <div className={styler.div}>
                 <label
-                  className={`${styler.label} bg-green-200 p-2`}
+                  className={`${styler.label} bg-green-100 p-2 rounded-sm`}
                   htmlFor=""
                 >
                   deposit{" "}
-                  <span className="font-bold text-xs">{form.amount} USD</span>{" "}
+                  <span className="font-semibold text-xs">
+                    {form.amount} USD
+                  </span>{" "}
                   to{" "}
-                  <span className="font-bold text-xs">
+                  <span className="font-medium text-xs">
                     {userWallet?.address}
                   </span>
                 </label>
@@ -105,7 +125,10 @@ const Deposit = () => {
                     value={userWallet?.address}
                     readOnly
                   />
-                  <button className="bg-slate-400 text-white text-xs w-[15%] font-medium py-3 px-2">
+                  <button
+                    onClick={copyToClipboard}
+                    className="bg-slate-400 text-white text-xs w-[15%] font-light py-3 px-3"
+                  >
                     Copy
                   </button>
                 </span>
@@ -129,7 +152,7 @@ const Deposit = () => {
                   Coin amount: {coinAmount?.toFixed(4) || `0.0000`} BTC
                 </span>
               </div>
-              <button className="text-white bg-yellow-500 border-none p-2 mt-5 font-bold uppercase">
+              <button className="text-white bg-yellow-500 border-none p-2 mt-5 font-semibold uppercase">
                 deposit
               </button>
             </form>

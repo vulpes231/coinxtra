@@ -5,14 +5,14 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialState = {
   withdrawLoading: false,
-  withdrawError: false,
+  withdrawError: null,
   withdrawSuccess: false,
   depositLoading: false,
-  depositError: false,
+  depositError: null,
   depositSuccess: false,
   getUserTrnxLoading: false,
-  getUserTrnxError: false,
-  userTrnxs: false,
+  getUserTrnxError: null,
+  userTrnxs: [],
 };
 
 export const withdrawFunds = createAsyncThunk(
@@ -53,16 +53,17 @@ export const depositFunds = createAsyncThunk(
   }
 );
 
-export const getUsertrnxs = createAsyncThunk("trnx/getUsertrnxs", async () => {
+export const getUserTrnxs = createAsyncThunk("trnx/getUserTrnxs", async () => {
   const url = `${liveServer}/transaction`;
   const accessToken = getAccessToken();
   try {
-    const response = axios.get(url, {
+    const response = await axios.get(url, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${accessToken}`,
       },
     });
+    console.log(response.data);
     return response.data;
   } catch (error) {
     sendError(error);
@@ -116,15 +117,15 @@ const trnxSlice = createSlice({
       });
 
     builder
-      .addCase(getUsertrnxs.pending, (state) => {
+      .addCase(getUserTrnxs.pending, (state) => {
         state.getUserTrnxLoading = true;
       })
-      .addCase(getUsertrnxs.fulfilled, (state, action) => {
+      .addCase(getUserTrnxs.fulfilled, (state, action) => {
         state.getUserTrnxLoading = false;
         state.userTrnxs = action.payload.trnxs;
         state.getUserTrnxError = false;
       })
-      .addCase(getUsertrnxs.rejected, (state, action) => {
+      .addCase(getUserTrnxs.rejected, (state, action) => {
         state.getUserTrnxLoading = false;
         state.userTrnxs = false;
         state.getUserTrnxError = action.error.message;

@@ -38,9 +38,9 @@ const Topup = ({ user }) => {
       </div>
       <div className="flex gap-2  items-center text-sm font-normal">
         <FaWallet className="w-10 h-10 p-2 bg-green-100 text-green-500 rounded-full" />
-        <p className="flex items-center gap-1">
+        <p className="flex items-center gap-1 text-xs whitespace-nowrap">
           Linked address:{" "}
-          <span className="font-light">3fa{user?.bindAddress}</span>
+          <span className="font-light">{user?.bindAddress}</span>
         </p>
       </div>
       <div className="flex justify-end">
