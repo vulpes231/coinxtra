@@ -11,7 +11,7 @@ import { resetLogin } from "../features/loginSlice";
 const Logoutmodal = () => {
   return (
     <div className="w-full h-screen fixed top-0 left-0 flex items-center justify-center bg-black bg-opacity-55">
-      <p className="text-slate-800 bg-white p-6">logging out...</p>
+      <p className="text-slate-800 bg-white p-6">Logging out...</p>
     </div>
   );
 };
@@ -33,7 +33,7 @@ const Sidebar = () => {
       sessionStorage.clear();
       dispatch(resetLogout());
       dispatch(resetLogin());
-      navigate("/signin");
+      navigate("/login");
     }
   }, [loggedOut]);
 

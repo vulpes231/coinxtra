@@ -53,7 +53,12 @@ const WithdrawHistory = () => {
               >
                 <td className={styler.th}>{trnx.transactionType[0]}</td>
                 <td className={`${styler.th} text-red-500`}>
-                  {trnx.amount} USD
+                  $
+                  {new Intl.NumberFormat("en-US", {
+                    style: "decimal",
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  }).format(trnx?.amount)}
                 </td>
                 <td
                   className={`${styler.th} ${

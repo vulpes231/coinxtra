@@ -25,7 +25,7 @@ const App = () => {
   useEffect(() => {
     if (!accessToken) {
       setToken(false);
-      navigate("/");
+      navigate("/login");
     }
   }, [accessToken]);
 

@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../features/userSlice";
 import { getUserWallet } from "../features/walletSlice";
 import { getBtcData } from "../features/coinSlice";
+import { depositFunds } from "../features/trnxSlice";
 
 const styler = {
   input:
@@ -27,8 +28,10 @@ const Deposit = () => {
   const { btcData } = useSelector((state) => state.coin);
 
   const [form, setForm] = useState({
-    amount: 0,
+    amount: "",
   });
+
+  const [copy, setCopy] = useState(false);
 
   const fee = 0.024 * form.amount || `0.00`;
 
@@ -55,6 +58,27 @@ const Deposit = () => {
         console.error("Failed to copy: ", err);
       });
   };
+
+  const handleDeposit = (e) => {
+    e.preventDefault();
+    const data = {
+      amount: form.amount,
+      address: userWallet?.address,
+      coinType: "bitcoin",
+    };
+    dispatch(depositFunds(data));
+  };
+
+  useEffect(() => {
+    let timeout;
+    if (copy) {
+      timeout = 3000;
+      setTimeout(() => {
+        setCopy(false);
+      }, timeout);
+    }
+    return () => clearTimeout(timeout);
+  }, [copy]);
 
   useEffect(() => {
     document.title = "CoinXtra - Deposit";
@@ -126,16 +150,15 @@ const Deposit = () => {
                 <span className="flex items-center gap-2">
                   <input
                     type="text"
-                    placeholder="Wallet address"
-                    className={`${styler.input} w-full`}
-                    value={userWallet?.address}
+                    className={`${styler.input} w-full placeholder:text-slate-900 placeholder:font-medium`}
+                    placeholder={userWallet?.address}
                     readOnly
                   />
                   <button
                     onClick={copyToClipboard}
                     className="bg-slate-400 text-white text-xs w-[15%] font-light py-3 px-3"
                   >
-                    Copy
+                    {!copy ? "Copy" : "Copied"}
                   </button>
                 </span>
               </div>
@@ -158,7 +181,10 @@ const Deposit = () => {
                   Coin amount: {coinAmount?.toFixed(4) || `0.0000`} BTC
                 </span>
               </div>
-              <button className="text-white bg-yellow-500 border-none p-2 mt-5 font-semibold uppercase">
+              <button
+                onClick={handleDeposit}
+                className="text-white bg-yellow-500 border-none p-2 mt-5 font-semibold uppercase"
+              >
                 deposit
               </button>
             </form>
