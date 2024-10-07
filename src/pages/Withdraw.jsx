@@ -106,6 +106,12 @@ const Withdraw = () => {
     return () => clearTimeout(timeout);
   }, [withdrawSuccess, dispatch]);
 
+  const formattedBalance = new Intl.NumberFormat("en-US", {
+    style: "decimal",
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(userWallet.balance);
+
   return (
     <section className="min-h-screen bg-slate-100 w-full">
       <div className="flex min-h-full mt-[66px]">
@@ -122,7 +128,7 @@ const Withdraw = () => {
                 >
                   available balance:{" "}
                   <span className="font-semibold md:font-bold ">
-                    {userWallet?.balance?.toFixed(2)} USD
+                    ${formattedBalance}
                   </span>
                 </p>
               </span>
@@ -157,7 +163,7 @@ const Withdraw = () => {
                   <option value="">choose account</option>
                   {userWallet && (
                     <option value={userWallet._id}>
-                      {`USD balance: ${userWallet.balance.toFixed(2)} USD`}
+                      {`Balance: $${formattedBalance}`}
                     </option>
                   )}
                 </select>

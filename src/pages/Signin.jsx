@@ -99,7 +99,7 @@ const Signin = () => {
             name={"password"}
           />
         </div>
-        <div className="flex items-center justify-between text-xs font-thin text-yellow-600 px-3">
+        <div className="flex items-center justify-between text-xs font-light text-yellow-600 px-3">
           <Link>Forgot password</Link>
           <span>
             No account? <Link to={"/register"}> create now</Link>

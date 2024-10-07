@@ -64,6 +64,12 @@ const Deposit = () => {
       dispatch(getBtcData());
     }
   }, [accessToken, dispatch]);
+
+  const formattedBalance = new Intl.NumberFormat("en-US", {
+    style: "decimal",
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(userWallet.balance);
   return (
     <section className="min-h-screen bg-slate-100 w-full ">
       <div className="flex min-h-full mt-[66px]">
@@ -80,7 +86,7 @@ const Deposit = () => {
                 >
                   available balance:{" "}
                   <span className="font-semibold md:font-bold ">
-                    {userWallet?.balance?.toFixed(2)} USD
+                    ${formattedBalance}
                   </span>
                 </p>
               </span>
