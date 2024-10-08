@@ -13,9 +13,11 @@ import Changepass from "./Changepass";
 import Topup from "./Topup";
 import Deposithistory from "./Deposithistory";
 import Dashwallet from "./Dashwallet";
+import Editmodal from "./Editmodal";
 
 export {
   Authnav,
+  Editmodal,
   Dashwallet,
   Deposithistory,
   Navbar,

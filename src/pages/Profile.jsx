@@ -1,11 +1,12 @@
-import React, { useEffect } from "react";
-import { Changepass, Sidebar, Topup } from "../components";
+import React, { useEffect, useState } from "react";
+import { Changepass, Editmodal, Sidebar, Topup } from "../components";
 import { useDispatch, useSelector } from "react-redux";
 import { getAccessToken } from "../utils/utils";
 import { getUser } from "../features/userSlice";
 import { userProfile } from "../assets";
-import { MdLocationOn, MdMail } from "react-icons/md";
+import { MdEditDocument, MdLocationOn, MdMail } from "react-icons/md";
 import { FaUserGroup } from "react-icons/fa6";
+import { FaUserEdit } from "react-icons/fa";
 
 const styler = {
   span: "flex items-center gap-2",
@@ -17,7 +18,16 @@ const Profile = () => {
   const accessToken = getAccessToken();
 
   const { user } = useSelector((state) => state.user);
-  // console.log(user);
+
+  const [editModal, setEditModal] = useState(false);
+
+  const handleEditModal = () => {
+    setEditModal(true);
+  };
+
+  const closeEditModal = () => {
+    setEditModal(false);
+  };
 
   useEffect(() => {
     if (accessToken) {
@@ -50,12 +60,21 @@ const Profile = () => {
                 </span>
                 <span className={styler.span}>
                   <MdMail />
-                  <p className="text-sm font-normal">{user.email}</p>
+                  <p className="text-sm font-light">{user.email}</p>
                 </span>
                 <span className={styler.span}>
                   <MdLocationOn />
-                  <p className="text-sm font-normal">{user.homeAddress}</p>
+                  <p className="text-sm font-light whitespace-nowrap">
+                    {user.homeAddress}
+                  </p>
                 </span>
+                <button
+                  onClick={handleEditModal}
+                  className="bg-yellow-500 text-white px-4 py-2 font-medium flex items-center w-[150px] whitespace-nowrap gap-2 rounded-md shadow-lg"
+                >
+                  <FaUserEdit />
+                  <span>Edit profile</span>
+                </button>
               </div>
             </div>
           </div>
@@ -74,6 +93,7 @@ const Profile = () => {
             </div>
           </div>
         </div>
+        {editModal && <Editmodal close={closeEditModal} />}
       </div>
     </section>
   );
