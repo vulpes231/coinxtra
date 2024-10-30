@@ -64,10 +64,12 @@ const WithdrawHistory = () => {
                   className={`${styler.th} ${
                     trnx.status == "pending"
                       ? "text-yellow-500 "
+                      : trnx.status == "failed"
+                      ? "text-red-500 "
                       : "text-green-500"
                   }`}
                 >
-                  {trnx.status}
+                  {trnx.status[0]}
                 </td>
               </tr>
             ))
