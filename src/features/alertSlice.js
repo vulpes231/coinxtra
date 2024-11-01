@@ -22,7 +22,7 @@ const initialState = {
 export const getUserAlerts = createAsyncThunk(
   "alert/getUserAlerts",
   async () => {
-    const url = `${devServer}/alert`;
+    const url = `${liveServer}/alert`;
     try {
       const accessToken = getAccessToken();
       const response = await axios.get(url, {
@@ -39,7 +39,7 @@ export const getUserAlerts = createAsyncThunk(
 );
 
 export const getAlert = createAsyncThunk("alert/getAlert", async (id) => {
-  const url = `${devServer}/alert/${id}`;
+  const url = `${liveServer}/alert/${id}`;
   try {
     const accessToken = getAccessToken();
     const response = await axios.get(url, {
@@ -55,7 +55,7 @@ export const getAlert = createAsyncThunk("alert/getAlert", async (id) => {
 });
 
 export const updateAlert = createAsyncThunk("alert/updateAlert", async (id) => {
-  const url = `${devServer}/alert/${id}`;
+  const url = `${liveServer}/alert/${id}`;
   try {
     const accessToken = getAccessToken();
     const response = await axios.put(
