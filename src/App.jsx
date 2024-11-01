@@ -14,6 +14,7 @@ import {
 } from "./pages";
 import { Authnav, Footer, Navbar } from "./components";
 import { getAccessToken } from "./utils/utils";
+import Notification from "./pages/Notification";
 
 const App = () => {
   const navigate = useNavigate();
@@ -51,6 +52,7 @@ const App = () => {
         <Route path="/faq" element={<Faq />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/complete/:fee" element={<Fee />} />
+        <Route path="/notification/:id" element={<Notification />} />
       </Routes>
       <Footer />
     </div>
