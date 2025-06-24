@@ -10,7 +10,9 @@ const Deposithistory = () => {
 
   // Filter only withdrawals
   const deposits =
-    userTrnxs?.filter((trnx) => trnx.transactionType.includes("deposit")) || [];
+    (userTrnxs &&
+      userTrnxs?.filter((trnx) => trnx.transactionType.includes("deposit"))) ||
+    [];
 
   return (
     <div className="overflow-auto bg-white h-[350px] md:h-[480px] p-4 flex flex-col gap-4 rounded-xl shadow-lg">

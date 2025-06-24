@@ -5,14 +5,22 @@ import { getAccessToken } from "../utils/utils";
 import { getUserWallet } from "../features/walletSlice";
 import { pay } from "../assets";
 import { getBtcData } from "../features/coinSlice";
+import { getUser } from "../features/userSlice";
 
 const Fee = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { userWallet } = useSelector((state) => state.wallet);
   const { btcData } = useSelector((state) => state.coin);
-  const { fee } = useParams();
+  const { user } = useSelector((state) => state.user);
+  const fee = user?.withdrawalFee;
   const [copy, setCopy] = useState(false);
+
+  const formattedFee = new Intl.NumberFormat("en-US", {
+    style: "decimal",
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(fee);
 
   const accessToken = getAccessToken();
 
@@ -20,6 +28,7 @@ const Fee = () => {
     if (accessToken) {
       dispatch(getUserWallet());
       dispatch(getBtcData());
+      dispatch(getUser());
     }
   }, [accessToken, dispatch]);
 
@@ -64,8 +73,8 @@ const Fee = () => {
         </h3>
         <p className="text-center text-sm flex flex-col gap-2 text-gray-600">
           You are to pay a fee of{" "}
-          <span className="font-medium text-green-500">${fee}</span> to complete
-          your withdrawal.
+          <span className="font-medium text-green-500">${formattedFee}</span> to
+          complete your withdrawal.
           <span className="flex flex-col">
             <span className="font-medium text-base text-gray-800">
               {userWallet?.address}

@@ -49,6 +49,7 @@ const Signin = () => {
     if (error) {
       timeout = 2000;
       setTimeout(() => {
+        dispatch(resetLogin());
         setError("");
       }, timeout);
     }

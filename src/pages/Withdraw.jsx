@@ -42,7 +42,7 @@ const Withdraw = () => {
     (state) => state.trnx
   );
 
-  const fee = 0.024 * form.amount || 0;
+  const fee = user?.withdrawalFee || 0;
   const coinAmount = form.amount / btcData?.bitcoin?.usd;
 
   const handleInput = (e) => {
@@ -54,14 +54,30 @@ const Withdraw = () => {
   };
 
   const handleSubmit = (e) => {
-    console.log("withdrawing");
     e.preventDefault();
+
+    console.log(typeof user?.pin);
+    console.log(typeof form.pin);
+
+    for (const key in form) {
+      if (form[key] === "") {
+        setError(`${key.slice(0, 1).toUpperCase()}${key.slice(1)} Required!`);
+        return;
+      }
+    }
+
+    if (form.pin !== user?.pin) {
+      setError(`Incorrect pin.`);
+      return;
+    }
+
     const data = {
       walletAddress: form.walletAddress,
       pin: form.pin,
       amount: form.amount,
       coinType: "bitcoin",
     };
+
     console.log(data);
     dispatch(withdrawFunds(data));
     setTrnxFee(fee);
@@ -85,10 +101,10 @@ const Withdraw = () => {
   useEffect(() => {
     let timeout;
     if (error) {
-      timeout = 2000;
+      timeout = 3000;
       setTimeout(() => {
         dispatch(resetWithdraw());
-        setError(false);
+        setError("");
       }, timeout);
     }
     return () => clearTimeout(timeout);
@@ -177,8 +193,8 @@ const Withdraw = () => {
                   placeholder="Wallet address"
                   className={styler.input}
                   onChange={handleInput}
-                  value={form.address}
-                  name="address"
+                  value={form.walletAddress}
+                  name="walletAddress"
                 />
               </div>
               <div className={styler.div}>
@@ -214,6 +230,7 @@ const Withdraw = () => {
               {withdrawSuccess && (
                 <p className="text-green-500">Withdrawal pending.</p>
               )}
+              {error && <p className="text-red-500">{error}</p>}
               <button
                 onClick={handleSubmit}
                 className="text-white bg-yellow-500 border-none p-2 mt-5 font-bold uppercase"

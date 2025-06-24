@@ -20,7 +20,10 @@ const WithdrawHistory = () => {
 
   // Filter only withdrawals
   const withdrawals =
-    userTrnxs?.filter((trnx) => trnx.transactionType.includes("withdrawal")) ||
+    (userTrnxs &&
+      userTrnxs.filter((trnx) =>
+        trnx.transactionType.includes("withdrawal")
+      )) ||
     [];
 
   return (

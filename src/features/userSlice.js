@@ -25,7 +25,7 @@ const initialState = {
 export const getUser = createAsyncThunk("user/getUser", async () => {
   const url = `${liveServer}/user`;
   const accessToken = getAccessToken();
-  //   console.log(accessToken);
+  // console.log(accessToken);
   try {
     const response = await axios.get(url, {
       headers: {
